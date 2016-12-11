@@ -25,10 +25,10 @@ function connectionStringToConfig(connectionString) {
       }
     }
   };
-    
+  
   var builder=new ncsBuilder(connectionString);
   if (builder.dataSource) {
-    var ds=builder.dataSource.split('\\', 2);
+    var ds=builder.dataSource.split('\\', 2);    
     config.options.host=ds[0] || config.options.host; 
     var instanceName=ds[1] || config.options.dialectOptions.instanceName;
     if (instanceName)
@@ -38,6 +38,15 @@ function connectionStringToConfig(connectionString) {
   config.password=builder.password || config.password;
   config.database=builder.initialCatalog || config.options.dialectOptions.database;
   config.options.dialectOptions.encrypt=builder.encrypt || config.options.dialectOptions.encrypt;
+
+  if (config.options.host.startsWith("tcp:")) {
+    config.options.host = config.options.host.slice(4);
+    var hostSplit = config.options.host.split(',',2);
+    config.options.host = hostSplit[0];
+    if (hostSplit.length >= 2) {
+      config.options.port = hostSplit[1];
+    }
+  }
 
   return config;
 }
