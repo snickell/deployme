@@ -17,7 +17,8 @@
         "P1",
         "P2",
         "P3",
-        "P4"
+        "P4",
+        "Happyday"
       ],
       "metadata": {
         "description": "Derides plan's pricing tier and instance size. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
@@ -164,7 +165,8 @@
           "name": "web",
           "type": "sourcecontrols",
           "dependsOn": [
-            "[variables('webSiteName')]"
+            "[variables('webSiteName')]",
+            "[concat(parameters('siteName'), '/config/connectionstrings')]"         
           ],
           "properties": {
             "RepoUrl": "[parameters('repoURL')]",
