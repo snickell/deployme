@@ -165,8 +165,8 @@
           "name": "web",
           "type": "sourcecontrols",
           "dependsOn": [
-            "[variables('webSiteName')]",
-            "[concat(parameters('siteName'), '/config/connectionstrings')]"         
+            "[resourceId('Microsoft.Web/Sites', variables('webSiteName'))]",
+            "[concat('Microsoft.Web/Sites/', variables('webSiteName'), '/config/connectionstrings')]"
           ],
           "properties": {
             "RepoUrl": "[parameters('repoURL')]",
