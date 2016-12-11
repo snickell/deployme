@@ -20,7 +20,7 @@
         "P4"
       ],
       "metadata": {
-        "description": "Describes plan's pricing tier and instance size. Monkey Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
+        "description": "Describes plan's pricing tier and instance size. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
       }
     },
     "skuCapacity": {
@@ -42,7 +42,21 @@
       "metadata": {
         "description": "The password of the admin user of the SQL Server"
       }
-    }
+    },
+    "repoURL": {
+      "type": "string",
+      "defaultValue": "https://github.com/snickell/deployme.git",
+      "metadata": {
+        "description": "URL for the elicitation-engine Git repository"
+      }
+    },
+    "branch": {
+      "type": "string",
+      "defaultValue": "master",
+      "metadata": {
+        "description": "The branch of the GitHub repository to use."
+      }
+    }    
   },
   "variables": {
     "hostingPlanName": "[concat('hostingplan', uniqueString(resourceGroup().id))]",
@@ -144,7 +158,20 @@
               "type": "SQLAzure"
             }
           }
-        }
+        },
+        {
+          "apiVersion": "2015-08-01",
+          "name": "web",
+          "type": "sourcecontrols",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+          ],
+          "properties": {
+            "RepoUrl": "[parameters('repoURL')]",
+            "branch": "[parameters('branch')]",
+            "IsManualIntegration": true
+          }
+        }        
       ]
     }
   ],
