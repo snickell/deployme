@@ -1,0 +1,5 @@
+run.sh
+node_modules/*
+builtAssets
+npm-debug.log
+public/dist/dev/*
