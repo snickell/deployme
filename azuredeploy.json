@@ -62,7 +62,7 @@
     "hostingPlanName": "[concat('hostingplan', uniqueString(resourceGroup().id))]",
     "webSiteName": "[concat('webSite', uniqueString(resourceGroup().id))]",
     "sqlserverName": "[concat('sqlserver', uniqueString(resourceGroup().id))]",
-    "databaseName": "sampledb"
+    "databaseName": "elicitation-engine"
   },
   "resources": [
     {
@@ -160,11 +160,12 @@
           }
         },
         {
-          "apiVersion": "2015-08-01",
+          "apiVersion": "2016-03-01",
           "name": "web",
           "type": "sourcecontrols",
           "dependsOn": [
-            "[resourceId('Microsoft.Web/Sites', variables('webSiteName'))]"
+            "[variables('webSiteName')]",
+            "[concat('Microsoft.Web/Sites/', variables('webSiteName'), '/config/web')]"            
           ],
           "properties": {
             "RepoUrl": "[parameters('repoURL')]",
